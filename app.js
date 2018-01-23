@@ -1,7 +1,10 @@
+// Single state object
 var state = {
     items: []
 };
 
+
+// state modification functions
 var addItem = function(state, item) {
     state.items.push(item);
 };
@@ -11,6 +14,7 @@ var removeItem = function(state, item) {
     state.items.splice(index, 1);
 };
 
+// Render functions
 var rendersList = function(state, element) {
     var itemsHTML = state.items.map(function(item) {
         return '<li>\
@@ -29,6 +33,7 @@ var rendersList = function(state, element) {
 };
 
 $(function() {
+    // Adds items submitted from the form
     $("#js-shopping-list-form").submit(function(event) {
         event.preventDefault();
         addItem(state, $('#shopping-list-entry').val());
@@ -36,10 +41,12 @@ $(function() {
         this.reset();
     });
 
+    // check and unchecking item in shopping list
     $('.js-shopping-list').on('click', '.shopping-item-toggle', function(event) {
         $($(this).closest("li").children('.shopping-item')).toggleClass("shopping-item__checked");
     });
 
+    // removing item form shopping list
     $('.js-shopping-list').on('click','.shopping-item-delete', function(event) {
         removeItem(state, $($(this).closest("li").children('.shopping-item').text()));
         $(this.closest("li").remove());
